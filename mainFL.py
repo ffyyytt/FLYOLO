@@ -22,6 +22,7 @@ parser.add_argument("-rounds", help="Number of rounds", nargs='?', type=int, def
 parser.add_argument("-epochs", help="Number of local epochs", nargs='?', type=int, default=10)
 parser.add_argument("-imgsz", help="Image size", nargs='?', type=int, default=512)
 parser.add_argument("-batch", help="Batch size", nargs='?', type=int, default=16)
+parser.add_argument("-seed", help="Random seed", nargs='?', type=int, default=1312)
 parser.add_argument("-model", help="Model backbone", nargs='?', type=str, default="yolov8n.pt")
 parser.add_argument("-strategy", help="Strategy Eg: FedAvg", nargs='?', type=str, default="FedAvg")
 args = parser.parse_args()
@@ -30,6 +31,8 @@ args = parser.parse_args()
 args._clients = [x.replace(".yaml", "") for x in args.clients]
 global_performance = {dname: [] for dname in args._clients + [args.group]}
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+random.seed(args.seed)
+np.random.seed(args.seed)
 
 if os.path.isdir(f"{args.strategy}_Output/{args._clients[0]}/"):
     print("Please remove Output before run a new experiment")
