@@ -1,0 +1,6 @@
+train: s0/train/images
+val: [shipsGE/valid/images]
+test: shipsGE/test/images
+
+nc: 1
+names: ['boat']
