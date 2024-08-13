@@ -23,10 +23,10 @@ model.val(data=args.data,
           split = args.split)
 path = yaml.safe_load(open(args.data))[args.split]
 if isinstance(path, list):
-    files = sum([glob(os.path.expanduser(f"~/datasets/{args.data[:args.data.rfind('/')]}/{p}/*")) for p in path], [])
+    files = sum([glob(os.path.expanduser(f"~/datasets/{args.data[:args.data.rfind('/')]}/{p}/*.jpg")) + glob(os.path.expanduser(f"~/datasets/{args.data[:args.data.rfind('/')]}/{p}/*.png")) for p in path], [])
 else:
-    files = glob(os.path.expanduser(f"~/datasets/{args.data[:args.data.rfind('/')]}/{path}/*"))
+    files = glob(os.path.expanduser(f"~/datasets/{args.data[:args.data.rfind('/')]}/{path}/*.jpg")) + glob(os.path.expanduser(f"~/datasets/{args.data[:args.data.rfind('/')]}/{path}/*.png"))
 
-results = model(files)
+results = model(files, imgsz = args.imgsz)
 for i, result in enumerate(results):
     result.save(filename=os.path.join(args.output, files[i].split("/")[-1]))
