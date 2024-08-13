@@ -45,6 +45,19 @@ Parameters:
 - batch: Batch size (default: 16)
 - model: Backbone model (default: yolov8n.pt)
 
+## Evaluate
+```console
+python3 ./test.py -data "ship_v0/planet.yaml" -split "val" -model "model.pt" -output "predict"
+```
+
+Parameters:
+- data: `yaml` file of dataset.
+- split: val, test, train
+- imgsz: Image size (default: 512)
+- batch: Batch size (default: 16)
+- model: Model weight (default: model.pt)
+- output: Folder Output (default: predict)
+
 ## Show results
 ```console
 python3 ./plot.py -dataset "ship_v0" -group "group4"
