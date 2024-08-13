@@ -16,16 +16,16 @@ args = parser.parse_args()
 if not os.path.exists(args.output):
     os.makedirs(args.output)
 
-model = ultralytics.YOLO(args.model, verbose=False)
+model = ultralytics.YOLO(args.model)
 model.val(data=args.data, 
           imgsz = args.imgsz,
           batch = args.batch,
           split = args.split)
 path = yaml.safe_load(open(args.data))[args.split]
 if isinstance(path, list):
-    files = sum([glob(p) for p in path])
+    files = sum([glob(p+"/*") for p in path])
 else:
-    files = glob(path)
+    files = glob(path+"/*")
 
 results = model(files)
 for i, result in enumerate(results):
