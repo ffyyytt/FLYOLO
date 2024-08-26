@@ -23,11 +23,17 @@ model.val(data=args.data,
           split = args.split)
 path = yaml.safe_load(open(args.data))[args.split]
 
-if isinstance(path, list):
-    files = sum([glob(os.path.expanduser(f"~/datasets/{args.data[:args.data.rfind('/')]}/{p}/*.jpg")) + glob(os.path.expanduser(f"~/datasets/{args.data[:args.data.rfind('/')]}/{p}/*.png")) for p in path], []) + sum([glob(f"{args.data[:args.data.rfind('/')]}/{p}/*.jpg") + glob(f"{args.data[:args.data.rfind('/')]}/{p}/*.png") for p in path], [])
-else:
-    files = glob(os.path.expanduser(f"~/datasets/{args.data[:args.data.rfind('/')]}/{path}/*.jpg")) + glob(os.path.expanduser(f"~/datasets/{args.data[:args.data.rfind('/')]}/{path}/*.png")) + glob(f"{args.data[:args.data.rfind('/')]}/{path}/*.png") + glob(f"{args.data[:args.data.rfind('/')]}/{path}/*.png")
+if not isinstance(path, list):
+    path = [path]
 
+files = []
+for p in path:
+    files += glob(os.path.expanduser(f"~/datasets/{args.data[:args.data.rfind('/')]}/{p}/*.jpg")) 
+    files += glob(os.path.expanduser(f"~/datasets/{args.data[:args.data.rfind('/')]}/{p}/*.png"))
+    files += glob(f"{os.path.join(p, "*.jpg")}")
+    files += glob(f"{os.path.join(p, "*.png")}")
+
+print(f"Total {len(files)} files")
 results = model(files, imgsz = args.imgsz)
 for i, result in enumerate(results):
     result.save(filename=os.path.join(args.output, files[i].split("/")[-1]))
