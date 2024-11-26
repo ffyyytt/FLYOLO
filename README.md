@@ -1,6 +1,23 @@
 # FLYOLO
 A federated learning YOLO framework. Design based on **ultralytics** (YOLO) and **flower** (Federated Learning).
 
+If you find the source codes useful and involve them in your research, please
+consider citing our paper
+
+```BibTeX
+@article{Duong2024,
+    title     = {FedShip: Federated Learning for Ship Detection from Multi-Source Satellite Images},
+    author    = {Duong, Anh-Kiet and
+                 La, Tran-Vu and
+                 L{\^{e}}, Ho{\`{a}}ng {\^{A}}n and
+                 Pham, Minh-Tan},
+    journal={IEEE Geoscience and Remote Sensing Letters}, 
+    volume={},
+    number={},
+    year = {2024}
+}
+```
+
 ## Install
 ```console
 git clone https://github.com/ffyyytt/FedYOLO.git
@@ -80,3 +97,4 @@ python3 ./split.py -n_splits 4
 Parameters:
 - n_splits: Number of subset. (default 4)
 - seed: Random seed. (default: 1312)
+
